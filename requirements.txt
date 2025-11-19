@@ -1,5 +1,4 @@
-[theme]
-primaryColor = "#3498db"
-backgroundColor = "#f0f2f6"
-secondaryBackgroundColor = "#e0e4eb"
-textColor = "#262730"
+streamlit
+numpy
+plotly
+pandas
