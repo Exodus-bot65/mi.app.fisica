@@ -1,4 +1,3 @@
-
 mport streamlit as st
 import numpy as np
 import plotly.graph_objects as go
@@ -1115,7 +1114,6 @@ def main():
                 ang1 = st.slider("Ángulo de incidencia θ₁ (°)", min_value=0, max_value=90, value=30, key="snell_ang1", help="Ángulo entre el rayo incidente y la normal.")
 
                 valid = True
-                
                 if n1_manual <= 0 or n2_manual <= 0:
                     st.error("❌ Los índices de refracción deben ser positivos.")
                     valid = False
