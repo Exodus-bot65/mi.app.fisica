@@ -75,22 +75,36 @@ st.set_page_config(
     layout="wide"
 )
 
-# Estilos CSS mejorados + FONDO SUAVE RELACIONADO CON LA FÍSICA
+# Estilos CSS mejorados + FONDO DE IMAGEN SUTIL SOLO EN EL CONTENIDO PRINCIPAL
 st.markdown("""
 <style>
-    /* Fondo suave relacionado con la física: cosmos / espacio */
+    /* Fondo de imagen de física, solo en el área principal */
     .stApp {
-        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-        color: #ecf0f1;
+        background-color: #2c3e50; /* Fondo oscuro para la sidebar y encabezado */
+    }
+
+    /* Aplicar fondo de imagen solo al contenedor principal */
+    .main-content {
+        background-image: url("https://i.imgur.com/3fRZVqk.png");
+        background-size: 150px; /* Tamaño más pequeño para que los símbolos no sean grandes */
+        background-repeat: repeat;
+        background-attachment: fixed;
+        background-color: rgba(255, 255, 255, 0.85); /* Capa blanca semitransparente */
+        filter: saturate(0.3) brightness(0.95); /* Desatura y atenúa la imagen */
+        padding: 1rem;
+        border-radius: 10px;
+        margin: 1rem 0;
     }
 
     /* Asegurar que el texto en inputs y selects sea legible */
     .stTextInput input, .stNumberInput input, .stSelectbox select,
     .stSlider .stMarkdown, .stMarkdown p, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4, .stMarkdown h5, .stMarkdown h6 {
-        color: #ecf0f1 !important;
+        color: #2c3e50 !important;
+        background-color: rgba(255, 255, 255, 0.9) !important;
+        border: 1px solid #ddd;
     }
 
-    /* Tarjetas y contenedores con fondo semitransparente para mejor contraste */
+    /* Tarjetas y contenedores con fondo blanco para mayor contraste */
     .module-card,
     .result-box,
     .info-box,
@@ -99,31 +113,35 @@ st.markdown("""
     .error-box,
     .sidebar-instructions,
     .curiosity-box {
-        background: rgba(255, 255, 255, 0.1) !important;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: #f7f9fc !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        border-left: 4px solid #3498db;
+        padding: 1rem;
+        margin: 0.5rem 0;
+        border-radius: 10px;
     }
 
-    /* Encabezados */
+    /* Encabezados principales */
     .main-header {
         font-size: 2.5rem;
         font-weight: 700;
-        color: #f1f2f6;
+        color: #2c3e50;
         text-align: center;
         margin-bottom: 2rem;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
-    /* Ajustes para botones y controles */
+    /* Botones */
     .stButton>button {
         background: linear-gradient(to right, #3498db, #2980b9);
         color: white;
         border: none;
         border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     .stButton>button:hover {
         background: linear-gradient(to right, #2980b9, #1c5980);
+        box-shadow: 0 3px 6px rgba(0,0,0,0.15);
     }
 
     /* Asegurar que el texto dentro de los cuadros sea claro */
@@ -131,7 +149,7 @@ st.markdown("""
     .curiosity-box strong,
     .sidebar-instructions,
     .module-card .stMarkdown p {
-        color: #f7f9fc !important;
+        color: #2c3e50 !important;
     }
 
     /* Estilos adicionales para Plotly si es necesario */
