@@ -1118,9 +1118,7 @@ def main():
         st.markdown(f'<div class="explanation-box">{respuesta}</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# =============== ¡CORREGIDA! ===============
-
-
-if __name__ == "__main__":  # <-- CORREGIDO: dos guiones bajos
+if __name__ == "__main__":
     main()
+
 
