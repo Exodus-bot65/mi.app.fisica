@@ -1,9 +1,9 @@
-import streamlit as st
+
+mport streamlit as st
 import numpy as np
 import plotly.graph_objects as go
 import math
 import random
-import requests  # <-- AÑADIDO: necesario para la IA
 
 # =============== DATOS CURIOSOS DE FÍSICA ===============
 def get_random_curiosity():
@@ -68,12 +68,14 @@ def get_random_curiosity():
         "🧠 Un agujero de gusano es una solución teórica en la relatividad general que podría conectar dos puntos distantes del espacio-tiempo."
     ]
     return random.choice(curiosidades)
+
 # =============== ESTILOS Y CONFIGURACIÓN ===============
 st.set_page_config(
     page_title="Física Inteligente",
     page_icon="🧠",
     layout="wide"
 )
+
 # Estilos CSS mejorados
 st.markdown("""
 <style>
@@ -148,6 +150,7 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
 # =============== FUNCIONES UTILITARIAS ===============
 def format_scientific(value, unit):
     """Formatea números en notación científica con unidades."""
@@ -157,16 +160,18 @@ def format_scientific(value, unit):
         return f"{value:.2e} {unit}"
     else:
         return f"{value:.4g} {unit}"
+
 def show_emoji_header(emoji, text):
     """Muestra un encabezado con emoji"""
     st.markdown(f"### {emoji} {text}")
+
 def show_calculation_process(formula, steps, result, unit, description=""):
     """
     Muestra el proceso de cálculo de forma clara y atractiva.
     """
     st.latex(formula)
     if steps:
-        st.markdown("*Pasos del cálculo:*")
+        st.markdown("**Pasos del cálculo:**")
         for step in steps:
             st.code(step, language="python")
     formatted_result = format_scientific(result, unit)
@@ -178,10 +183,13 @@ def show_calculation_process(formula, steps, result, unit, description=""):
     </div>
     """
     st.markdown(result_html, unsafe_allow_html=True)
+
 def show_error_message(message):
     st.markdown(f'<div class="error-box">{message}</div>', unsafe_allow_html=True)
+
 def show_warning_message(message):
     st.markdown(f'<div class="warning-box">{message}</div>', unsafe_allow_html=True)
+
 # =============== FUNCIONES DE CÁLCULO ACTUALIZADAS ===============
 def convertir_temperatura(valor, de, a):
     if de == "Celsius":
@@ -217,6 +225,7 @@ def convertir_temperatura(valor, de, a):
             description=f"Temperatura equivalente en {a}."
         )
     return res
+
 def calor_sensible_process(masa, c_especifico, delta_t):
     if masa <= 0 or c_especifico <= 0:
         return None
@@ -227,6 +236,7 @@ def calor_sensible_process(masa, c_especifico, delta_t):
         f"Q = {q:.2f}"
     ]
     return q, steps, "J", "Calor absorbido o liberado por el cambio de temperatura."
+
 def calor_latente_process(masa, l):
     if masa <= 0 or l <= 0:
         return None
@@ -237,6 +247,7 @@ def calor_latente_process(masa, l):
         f"Q = {q:.2f}"
     ]
     return q, steps, "J", "Calor absorbido o liberado durante un cambio de estado."
+
 def primera_ley_termodinamica_process(delta_u, q=None, w=None):
     try:
         if q is None and w is not None:
@@ -259,6 +270,7 @@ def primera_ley_termodinamica_process(delta_u, q=None, w=None):
             return None
     except Exception as e:
         return None
+
 def ley_coulomb_process(q1, q2, r, k=8.99e9):
     if r <= 0:
         return None
@@ -270,6 +282,7 @@ def ley_coulomb_process(q1, q2, r, k=8.99e9):
         f"F = {f:.2e}"
     ]
     return f, steps, "N", "Fuerza de atracción o repulsión entre las cargas."
+
 def campo_electrico_process(q, r, k=8.99e9):
     if r <= 0:
         return None
@@ -281,6 +294,7 @@ def campo_electrico_process(q, r, k=8.99e9):
         f"E = {e:.2e}"
     ]
     return e, steps, "N/C", "Intensidad del campo eléctrico."
+
 def potencial_electrico_process(q, r, k=8.99e9):
     if r <= 0:
         return None
@@ -291,6 +305,7 @@ def potencial_electrico_process(q, r, k=8.99e9):
         f"V = {v:.2e}"
     ]
     return v, steps, "V", "Potencial eléctrico."
+
 def capacitor_energia_process(c, v):
     if c < 0 or v < 0:
         return None
@@ -302,6 +317,7 @@ def capacitor_energia_process(c, v):
         f"U = {u:.2e}"
     ]
     return u, steps, "J", "Energía almacenada en el capacitor."
+
 def ley_ohm_process(v=None, i=None, r=None):
     try:
         if v is None and i is not None and r is not None:
@@ -336,6 +352,7 @@ def ley_ohm_process(v=None, i=None, r=None):
             return None
     except Exception as e:
         return None
+
 def potencia_electrica_process(v=None, i=None, r=None):
     try:
         if v is not None and i is not None:
@@ -368,6 +385,7 @@ def potencia_electrica_process(v=None, i=None, r=None):
         return p, steps, "W", "Potencia disipada o generada."
     except Exception as e:
         return None
+
 def frecuencia_periodo_process(f=None, t=None):
     try:
         if f is None and t is not None and t != 0:
@@ -390,6 +408,7 @@ def frecuencia_periodo_process(f=None, t=None):
             return None
     except Exception as e:
         return None
+
 def velocidad_onda_process(f, lam):
     if f < 0 or lam < 0:
         return None
@@ -400,6 +419,7 @@ def velocidad_onda_process(f, lam):
         f"v = {v:.2f}"
     ]
     return v, steps, "m/s", "Velocidad de propagación de la onda."
+
 def energia_foton_process(f=None, lam=None, h=6.626e-34, c=3e8):
     try:
         if f is not None:
@@ -426,6 +446,7 @@ def energia_foton_process(f=None, lam=None, h=6.626e-34, c=3e8):
         return e, steps, "J", "Energía de un fotón."
     except Exception as e:
         return None
+
 def ley_snell_process(n1, angulo1, n2):
     if n1 <= 0 or n2 <= 0:
         return None
@@ -444,6 +465,7 @@ def ley_snell_process(n1, angulo1, n2):
         f"θ₂ = {theta2:.2f}°"
     ]
     return theta2, steps, "°", "Ángulo de refracción."
+
 # =============== GRÁFICOS INTERACTIVOS MEJORADOS ===============
 def graficar_dilatacion_lineal_interactiva(l0, alpha, dt_max):
     if l0 <= 0 or alpha < 0 or dt_max < 0:
@@ -468,6 +490,7 @@ def graficar_dilatacion_lineal_interactiva(l0, alpha, dt_max):
         hovermode='x unified'
     )
     return fig
+
 def graficar_campo_electrico_interactivo(q, r, r_max=10.0):
     if r_max <= 0:
         r_max = 10.0
@@ -501,6 +524,7 @@ def graficar_campo_electrico_interactivo(q, r, r_max=10.0):
         yaxis_type="log"
     )
     return fig
+
 def graficar_potencial_electrico_interactivo(q, r, r_max=10.0):
     if r_max <= 0:
         r_max = 10.0
@@ -533,6 +557,7 @@ def graficar_potencial_electrico_interactivo(q, r, r_max=10.0):
         title_font_size=18
     )
     return fig
+
 def graficar_snell_interactivo(n1, angulo1, n2):
     fig = go.Figure()
     fig.add_shape(type="line", x0=0, y0=-3, x1=0, y1=3, line=dict(color="gray", width=1, dash="dot"))
@@ -553,8 +578,9 @@ def graficar_snell_interactivo(n1, angulo1, n2):
         y_ref = 2.5 * math.cos(theta1_rad)
         fig.add_trace(go.Scatter(x=[0, x_ref], y=[0, y_ref], mode='lines', line=dict(color="green", width=4, dash="dot"), name="Reflejado (Total)"))
         fig.add_annotation(x=1.5, y=1.5, text="REFLEXIÓN TOTAL", showarrow=False, font=dict(color="green", size=14, weight="bold"))
-    fig.add_annotation(x=-3.5, y=2.5, text=f"Medio 1\nn₁ = {n1}", showarrow=False, font=dict(size=14, color="red"))
-    fig.add_annotation(x=-3.5, y=-2.5, text=f"Medio 2\nn₂ = {n2}", showarrow=False, font=dict(size=14, color="blue"))
+
+    fig.add_annotation(x=-3.5, y=2.5, text=f"Medio 1<br>n₁ = {n1}", showarrow=False, font=dict(size=14, color="red"))
+    fig.add_annotation(x=-3.5, y=-2.5, text=f"Medio 2<br>n₂ = {n2}", showarrow=False, font=dict(size=14, color="blue"))
     fig.add_annotation(x=x_inc/2 - 0.3, y=y_inc/2, text=f"θ₁ = {angulo1}°", showarrow=False, font=dict(color="red", size=12))
     fig.update_layout(
         title="🔍 Ley de Snell: Refracción y Reflexión",
@@ -567,6 +593,7 @@ def graficar_snell_interactivo(n1, angulo1, n2):
         margin=dict(l=20, r=20, t=50, b=20)
     )
     return fig
+
 def graficar_onda_senoidal_interactiva(f, lam, longitud_m=3.0):
     if f <= 0 or lam <= 0 or longitud_m <= 0:
         return go.Figure()
@@ -589,6 +616,7 @@ def graficar_onda_senoidal_interactiva(f, lam, longitud_m=3.0):
         title_font_size=18
     )
     return fig
+
 def graficar_energia_foton():
     lam_vals = np.linspace(100e-9, 1000e-9, 200)
     h = 6.626e-34
@@ -612,58 +640,35 @@ def graficar_energia_foton():
     )
     return fig
 
-# =============== FUNCIONES DE IA ===============
-def consultar_ia_fisica_ollama(pregunta: str, modelo: str = "phi3") -> str:
-    try:
-        prompt = (
-            "Eres un profesor de física amable y preciso. "
-            "Responde en máximo 3 oraciones, en español, de forma clara y educativa. "
-            f"Pregunta del estudiante: '{pregunta}'"
-        )
-        response = requests.post(
-            "http://localhost:11434/api/generate",
-            json={
-                "model": modelo,
-                "prompt": prompt,
-                "stream": False,
-                "options": {
-                    "temperature": 0.3,
-                    "num_predict": 150
-                }
-            },
-            timeout=25
-        )
-        if response.status_code == 200:
-            data = response.json()
-            return data.get("response", "No pude generar una respuesta.").strip()
-        else:
-            return "⚠️ La IA local no respondió. ¿Está Ollama activo?"
-    except Exception as e:
-        return f"❌ Error: {str(e)}"
-
 # =============== INTERFAZ PRINCIPAL ===============
 def main():
     st.markdown('<h1 class="main-header">🧠 Aprende Física de Forma Inteligente</h1>', unsafe_allow_html=True)
+
     # =============== Datos persistentes ===============
     if 'curiosidad_persistente' not in st.session_state:
         st.session_state.curiosidad_persistente = get_random_curiosity()
+
     # =============== BARRA LATERAL ===============
     with st.sidebar:
         st.markdown("## 📚 Temas Disponibles")
         tema = st.selectbox("Selecciona un módulo",
                            ["🔥 Termodinámica", "⚡ Electricidad y Magnetismo", "🌊 Óptica y Ondas"])
+
         st.markdown("---")
         st.markdown("### ℹ Instrucciones")
         st.markdown('<div class="sidebar-instructions">Selecciona un tema y subtema. En gráficos interactivos, los resultados se actualizan al cambiar los valores. En otros, utiliza "Calcular".</div>', unsafe_allow_html=True)
+        
         st.markdown("---")
         st.markdown("### 🌟 Dato Curioso")
         text_only = st.session_state.curiosidad_persistente.split(" ", 1)[1] if " " in st.session_state.curiosidad_persistente else st.session_state.curiosidad_persistente
         st.markdown(f'<div class="curiosity-box"><strong>⚡ Hoy aprende esto:</strong><br>{text_only}</div>', unsafe_allow_html=True)
+
     # Contenido principal
     if tema == "🔥 Termodinámica":
         st.markdown('<div class="module-card">', unsafe_allow_html=True)
         show_emoji_header("🔥", "Termodinámica")
         tab_conv, tab_sens, tab_lat, tab_ley1, tab_dil = st.tabs(["Conv. Temp", "Calor Sens", "Calor Lat", "1ra Ley", "Dilatación"])
+
         with tab_conv:
             col1, col2 = st.columns(2)
             with col1:
@@ -673,6 +678,7 @@ def main():
                 a = st.selectbox("A", ["Celsius", "Kelvin", "Fahrenheit"], key="conv_a")
             if st.button("🌡 Convertir", type="primary", key="conv_btn"):
                 convertir_temperatura(val, de, a)
+
         with tab_sens:
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -694,6 +700,7 @@ def main():
                         unit=unit,
                         description=desc
                     )
+
         with tab_lat:
             col1, col2 = st.columns(2)
             with col1:
@@ -713,6 +720,7 @@ def main():
                         unit=unit,
                         description=desc
                     )
+
         with tab_ley1:
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -740,6 +748,7 @@ def main():
                         unit=unit,
                         description=desc
                     )
+
         with tab_dil:
             col1, col2 = st.columns(2)
             with col1:
@@ -774,10 +783,12 @@ def main():
                 )
                 st.plotly_chart(graficar_dilatacion_lineal_interactiva(l0, alpha, dt_max), use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
+
     elif tema == "⚡ Electricidad y Magnetismo":
         st.markdown('<div class="module-card">', unsafe_allow_html=True)
         show_emoji_header("⚡", "Electricidad y Magnetismo")
         tab_coul, tab_camp, tab_pot, tab_cap, tab_ohm, tab_poten = st.tabs(["Coulomb", "Campo", "Potencial", "Capacitor", "Ohm", "Potencia"])
+
         with tab_coul:
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -799,6 +810,7 @@ def main():
                         unit=unit,
                         description=desc
                     )
+
         with tab_camp:
             col1, col2 = st.columns(2)
             with col1:
@@ -820,6 +832,7 @@ def main():
                         description=desc
                     )
                     st.plotly_chart(graficar_campo_electrico_interactivo(q, r, r_max), use_container_width=True)
+
         with tab_pot:
             col1, col2 = st.columns(2)
             with col1:
@@ -841,6 +854,7 @@ def main():
                         description=desc
                     )
                     st.plotly_chart(graficar_potencial_electrico_interactivo(q, r, r_max), use_container_width=True)
+
         with tab_cap:
             col1, col2 = st.columns(2)
             with col1:
@@ -860,6 +874,7 @@ def main():
                         unit=unit,
                         description=desc
                     )
+
         with tab_ohm:
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -870,8 +885,8 @@ def main():
                 r = st.number_input("R (Ω) - 0 si no", value=0.0, key="ohm_r")
             if st.button("⚡ Calcular Ley de Ohm", type="primary", key="ohm_btn"):
                 result = ley_ohm_process(
-                    v if v != 0 else None,
-                    i if i != 0 else None,
+                    v if v != 0 else None, 
+                    i if i != 0 else None, 
                     r if r != 0 else None
                 )
                 if result is None:
@@ -885,6 +900,7 @@ def main():
                         unit=unit,
                         description=desc
                     )
+
         with tab_poten:
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -911,10 +927,12 @@ def main():
                         description=desc
                     )
         st.markdown('</div>', unsafe_allow_html=True)
+
     elif tema == "🌊 Óptica y Ondas":
         st.markdown('<div class="module-card">', unsafe_allow_html=True)
         show_emoji_header("🌊", "Óptica y Ondas")
         tab_fp, tab_vo, tab_ef, tab_snell = st.tabs(["Frec/Per", "Vel Onda", "Energía Fotón", "Snell"])
+
         with tab_fp:
             col1, col2 = st.columns(2)
             with col1:
@@ -937,6 +955,7 @@ def main():
                         unit=unit,
                         description=desc
                     )
+
         with tab_vo:
             col1, col2 = st.columns(2)
             with col1:
@@ -960,6 +979,7 @@ def main():
                         st.error("La frecuencia debe ser positiva.")
                     if lam <= 0:
                         st.error("La longitud de onda debe ser positiva.")
+
         with tab_ef:
             col1, col2 = st.columns(2)
             with col1:
@@ -984,6 +1004,7 @@ def main():
                         description=desc
                     )
                     st.plotly_chart(graficar_energia_foton(), use_container_width=True)
+
         with tab_snell:
             st.markdown("<h5 style='color:#2c3e50;'>Simula cómo la luz se dobla al pasar de un material a otro.</h5>", unsafe_allow_html=True)
             materiales = {
@@ -999,36 +1020,45 @@ def main():
                 "Diamante": 2.417,
                 "Germanio (IR)": 4.05
             }
+
             col1, col2 = st.columns([2, 3])
+
             with col1:
                 st.markdown("#### 🧪 Parámetros de Entrada")
+
                 # Inicializar estado de sesión si no existe
                 if 'n1_selected' not in st.session_state:
                     st.session_state.n1_selected = "Aire"
                     st.session_state.n1_manual = materiales["Aire"]
                     st.session_state.n1_is_manual = False
+
                 if 'n2_selected' not in st.session_state:
                     st.session_state.n2_selected = "Agua"
                     st.session_state.n2_manual = materiales["Agua"]
                     st.session_state.n2_is_manual = False
+
                 # Función para actualizar n1 desde material (siempre, incluso si fue editado)
                 def update_n1_from_material():
                     st.session_state.n1_manual = materiales[st.session_state.mat1]
                     st.session_state.n1_selected = st.session_state.mat1
                     st.session_state.n1_is_manual = False  # Resetear a automático
+
                 # Función para bloquear n1 cuando se edita manualmente
                 def lock_n1():
                     st.session_state.n1_is_manual = True
+
                 # Función para actualizar n2 desde material (siempre, incluso si fue editado)
                 def update_n2_from_material():
                     st.session_state.n2_manual = materiales[st.session_state.mat2]
                     st.session_state.n2_selected = st.session_state.mat2
                     st.session_state.n2_is_manual = False  # Resetear a automático
+
                 # Función para bloquear n2 cuando se edita manualmente
                 def lock_n2():
                     st.session_state.n2_is_manual = True
+
                 # --- Medio 1 ---
-                st.markdown("*Medio 1* (luz incidente)")
+                st.markdown("**Medio 1** (luz incidente)")
                 cols_m1 = st.columns(2)
                 with cols_m1[0]:
                     material1 = st.selectbox(
@@ -1046,14 +1076,17 @@ def main():
                         key="n1_manual",
                         on_change=lock_n1
                     )
+
                 # Mostrar estado
                 if st.session_state.n1_is_manual:
-                    st.caption("🔸 Valor personalizado")
+                    st.caption("🔸 *Valor personalizado*")
                 else:
-                    st.caption(f"🔹 Usando valor de: {st.session_state.n1_selected}")
+                    st.caption(f"🔹 *Usando valor de:* `{st.session_state.n1_selected}`")
+
                 st.divider()
+
                 # --- Medio 2 ---
-                st.markdown("*Medio 2* (luz refractada)")
+                st.markdown("**Medio 2** (luz refractada)")
                 cols_m2 = st.columns(2)
                 with cols_m2[0]:
                     material2 = st.selectbox(
@@ -1071,20 +1104,25 @@ def main():
                         key="n2_manual",
                         on_change=lock_n2
                     )
+
                 # Mostrar estado
                 if st.session_state.n2_is_manual:
-                    st.caption("🔸 Valor personalizado")
+                    st.caption("🔸 *Valor personalizado*")
                 else:
-                    st.caption(f"🔹 Usando valor de: {st.session_state.n2_selected}")
+                    st.caption(f"🔹 *Usando valor de:* `{st.session_state.n2_selected}`")
+
                 st.divider()
                 ang1 = st.slider("Ángulo de incidencia θ₁ (°)", min_value=0, max_value=90, value=30, key="snell_ang1", help="Ángulo entre el rayo incidente y la normal.")
+
                 valid = True
+                
                 if n1_manual <= 0 or n2_manual <= 0:
                     st.error("❌ Los índices de refracción deben ser positivos.")
                     valid = False
                 if ang1 < 0 or ang1 > 90:
                     st.error("❌ El ángulo debe estar entre 0° y 90°.")
                     valid = False
+
             with col2:
                 st.markdown("#### 🔍 Resultado y Diagrama")
                 if valid:
@@ -1103,22 +1141,11 @@ def main():
                     st.plotly_chart(graficar_snell_interactivo(n1_manual, ang1, n2_manual), use_container_width=True)
                 else:
                     st.info("Ajuste los parámetros para ver la simulación.")
+
             with st.expander("📖 Índices de refracción de materiales comunes"):
                 st.table(materiales)
-        st.markdown('</div>', unsafe_allow_html=True)
 
-    # =============== IA LOCAL ===============
-    st.markdown('<div class="module-card">', unsafe_allow_html=True)
-    show_emoji_header("🧠", "Asistente de IA (Física Local)")
-    st.markdown("ℹ️ Requiere **Ollama + phi3** instalado en esta PC.")
-    pregunta = st.text_input("Escribe tu duda de física (ej: ¿por qué el cielo es azul?)")
-    if st.button("🧠 Consultar a la IA") and pregunta.strip():
-        with st.spinner("Pensando..."):
-            respuesta = consultar_ia_fisica_ollama(pregunta.strip())
-        st.markdown(f'<div class="explanation-box">{respuesta}</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
-
-
