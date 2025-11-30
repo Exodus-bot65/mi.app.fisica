@@ -75,77 +75,68 @@ st.set_page_config(
     layout="wide"
 )
 
-# Estilos CSS mejorados
+# Estilos CSS mejorados + FONDO SUAVE RELACIONADO CON LA FÍSICA
 st.markdown("""
 <style>
+    /* Fondo suave relacionado con la física: cosmos / espacio */
+    .stApp {
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #ecf0f1;
+    }
+
+    /* Asegurar que el texto en inputs y selects sea legible */
+    .stTextInput input, .stNumberInput input, .stSelectbox select,
+    .stSlider .stMarkdown, .stMarkdown p, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4, .stMarkdown h5, .stMarkdown h6 {
+        color: #ecf0f1 !important;
+    }
+
+    /* Tarjetas y contenedores con fondo semitransparente para mejor contraste */
+    .module-card,
+    .result-box,
+    .info-box,
+    .explanation-box,
+    .warning-box,
+    .error-box,
+    .sidebar-instructions,
+    .curiosity-box {
+        background: rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #f7f9fc !important;
+    }
+
+    /* Encabezados */
     .main-header {
         font-size: 2.5rem;
         font-weight: 700;
-        color: #2c3e50;
+        color: #f1f2f6;
         text-align: center;
         margin-bottom: 2rem;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
-    .module-card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 15px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        margin: 1rem 0;
-        border-left: 4px solid #3498db;
-    }
-    .result-box {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+    /* Ajustes para botones y controles */
+    .stButton>button {
+        background: linear-gradient(to right, #3498db, #2980b9);
         color: white;
-        padding: 1rem;
-        border-radius: 10px;
-        margin: 1rem 0;
-    }
-    .info-box {
-        background: #f8f9fa;
-        border-left: 4px solid #28a745;
-        padding: 1rem;
-        border-radius: 0 8px 8px 0;
-        margin: 1rem 0;
-    }
-    .explanation-box {
-        background: #e3f2fd;
-        border-left: 4px solid #2196f3;
-        padding: 1rem;
-        border-radius: 0 8px 8px 0;
-        margin: 1rem 0;
-    }
-    .warning-box {
-        background: #fff3cd;
-        border-left: 4px solid #ffc107;
-        padding: 1rem;
-        border-radius: 0 8px 8px 0;
-        margin: 1rem 0;
-    }
-    .error-box {
-        background: #f8d7da;
-        color: #721c24;
-        padding: 1rem;
-        border-radius: 10px;
-        margin: 1rem 0;
-        border: 1px solid #f5c6cb;
-    }
-    /* Cuadro azul en la sidebar */
-    .sidebar-instructions {
-        background: #e3f2fd;
-        padding: 1rem;
+        border: none;
         border-radius: 8px;
-        border-left: 4px solid #2196f3;
-        margin: 1rem 0;
-        font-size: 0.9rem;
     }
-    /* Cuadro azul para dato curioso */
-    .curiosity-box {
-        background: #e3f2fd;
-        padding: 1rem;
-        border-radius: 8px;
-        border-left: 4px solid #2196f3;
-        margin: 1rem 0;
-        font-size: 0.9rem;
+    .stButton>button:hover {
+        background: linear-gradient(to right, #2980b9, #1c5980);
+    }
+
+    /* Asegurar que el texto dentro de los cuadros sea claro */
+    .result-box h4, .result-box p,
+    .curiosity-box strong,
+    .sidebar-instructions,
+    .module-card .stMarkdown p {
+        color: #f7f9fc !important;
+    }
+
+    /* Estilos adicionales para Plotly si es necesario */
+    .plotly-graph-div {
+        background: transparent !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -170,7 +161,7 @@ def show_calculation_process(formula, steps, result, unit, description=""):
     """
     st.latex(formula)
     if steps:
-        st.markdown("**Pasos del cálculo:**")
+        st.markdown("*Pasos del cálculo:*")
         for step in steps:
             st.code(step, language="python")
     formatted_result = format_scientific(result, unit)
@@ -577,7 +568,6 @@ def graficar_snell_interactivo(n1, angulo1, n2):
         y_ref = 2.5 * math.cos(theta1_rad)
         fig.add_trace(go.Scatter(x=[0, x_ref], y=[0, y_ref], mode='lines', line=dict(color="green", width=4, dash="dot"), name="Reflejado (Total)"))
         fig.add_annotation(x=1.5, y=1.5, text="REFLEXIÓN TOTAL", showarrow=False, font=dict(color="green", size=14, weight="bold"))
-
     fig.add_annotation(x=-3.5, y=2.5, text=f"Medio 1<br>n₁ = {n1}", showarrow=False, font=dict(size=14, color="red"))
     fig.add_annotation(x=-3.5, y=-2.5, text=f"Medio 2<br>n₂ = {n2}", showarrow=False, font=dict(size=14, color="blue"))
     fig.add_annotation(x=x_inc/2 - 0.3, y=y_inc/2, text=f"θ₁ = {angulo1}°", showarrow=False, font=dict(color="red", size=12))
@@ -642,32 +632,26 @@ def graficar_energia_foton():
 # =============== INTERFAZ PRINCIPAL ===============
 def main():
     st.markdown('<h1 class="main-header">🧠 Aprende Física de Forma Inteligente</h1>', unsafe_allow_html=True)
-
     # =============== Datos persistentes ===============
     if 'curiosidad_persistente' not in st.session_state:
         st.session_state.curiosidad_persistente = get_random_curiosity()
-
     # =============== BARRA LATERAL ===============
     with st.sidebar:
         st.markdown("## 📚 Temas Disponibles")
         tema = st.selectbox("Selecciona un módulo",
                            ["🔥 Termodinámica", "⚡ Electricidad y Magnetismo", "🌊 Óptica y Ondas"])
-
         st.markdown("---")
         st.markdown("### ℹ Instrucciones")
         st.markdown('<div class="sidebar-instructions">Selecciona un tema y subtema. En gráficos interactivos, los resultados se actualizan al cambiar los valores. En otros, utiliza "Calcular".</div>', unsafe_allow_html=True)
-        
         st.markdown("---")
         st.markdown("### 🌟 Dato Curioso")
         text_only = st.session_state.curiosidad_persistente.split(" ", 1)[1] if " " in st.session_state.curiosidad_persistente else st.session_state.curiosidad_persistente
         st.markdown(f'<div class="curiosity-box"><strong>⚡ Hoy aprende esto:</strong><br>{text_only}</div>', unsafe_allow_html=True)
-
     # Contenido principal
     if tema == "🔥 Termodinámica":
         st.markdown('<div class="module-card">', unsafe_allow_html=True)
         show_emoji_header("🔥", "Termodinámica")
         tab_conv, tab_sens, tab_lat, tab_ley1, tab_dil = st.tabs(["Conv. Temp", "Calor Sens", "Calor Lat", "1ra Ley", "Dilatación"])
-
         with tab_conv:
             col1, col2 = st.columns(2)
             with col1:
@@ -677,7 +661,6 @@ def main():
                 a = st.selectbox("A", ["Celsius", "Kelvin", "Fahrenheit"], key="conv_a")
             if st.button("🌡 Convertir", type="primary", key="conv_btn"):
                 convertir_temperatura(val, de, a)
-
         with tab_sens:
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -699,7 +682,6 @@ def main():
                         unit=unit,
                         description=desc
                     )
-
         with tab_lat:
             col1, col2 = st.columns(2)
             with col1:
@@ -719,7 +701,6 @@ def main():
                         unit=unit,
                         description=desc
                     )
-
         with tab_ley1:
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -747,7 +728,6 @@ def main():
                         unit=unit,
                         description=desc
                     )
-
         with tab_dil:
             col1, col2 = st.columns(2)
             with col1:
@@ -782,12 +762,10 @@ def main():
                 )
                 st.plotly_chart(graficar_dilatacion_lineal_interactiva(l0, alpha, dt_max), use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
-
     elif tema == "⚡ Electricidad y Magnetismo":
         st.markdown('<div class="module-card">', unsafe_allow_html=True)
         show_emoji_header("⚡", "Electricidad y Magnetismo")
         tab_coul, tab_camp, tab_pot, tab_cap, tab_ohm, tab_poten = st.tabs(["Coulomb", "Campo", "Potencial", "Capacitor", "Ohm", "Potencia"])
-
         with tab_coul:
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -809,7 +787,6 @@ def main():
                         unit=unit,
                         description=desc
                     )
-
         with tab_camp:
             col1, col2 = st.columns(2)
             with col1:
@@ -831,7 +808,6 @@ def main():
                         description=desc
                     )
                     st.plotly_chart(graficar_campo_electrico_interactivo(q, r, r_max), use_container_width=True)
-
         with tab_pot:
             col1, col2 = st.columns(2)
             with col1:
@@ -853,7 +829,6 @@ def main():
                         description=desc
                     )
                     st.plotly_chart(graficar_potencial_electrico_interactivo(q, r, r_max), use_container_width=True)
-
         with tab_cap:
             col1, col2 = st.columns(2)
             with col1:
@@ -873,7 +848,6 @@ def main():
                         unit=unit,
                         description=desc
                     )
-
         with tab_ohm:
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -899,7 +873,6 @@ def main():
                         unit=unit,
                         description=desc
                     )
-
         with tab_poten:
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -926,12 +899,10 @@ def main():
                         description=desc
                     )
         st.markdown('</div>', unsafe_allow_html=True)
-
     elif tema == "🌊 Óptica y Ondas":
         st.markdown('<div class="module-card">', unsafe_allow_html=True)
         show_emoji_header("🌊", "Óptica y Ondas")
         tab_fp, tab_vo, tab_ef, tab_snell = st.tabs(["Frec/Per", "Vel Onda", "Energía Fotón", "Snell"])
-
         with tab_fp:
             col1, col2 = st.columns(2)
             with col1:
@@ -954,7 +925,6 @@ def main():
                         unit=unit,
                         description=desc
                     )
-
         with tab_vo:
             col1, col2 = st.columns(2)
             with col1:
@@ -978,7 +948,6 @@ def main():
                         st.error("La frecuencia debe ser positiva.")
                     if lam <= 0:
                         st.error("La longitud de onda debe ser positiva.")
-
         with tab_ef:
             col1, col2 = st.columns(2)
             with col1:
@@ -1003,7 +972,6 @@ def main():
                         description=desc
                     )
                     st.plotly_chart(graficar_energia_foton(), use_container_width=True)
-
         with tab_snell:
             st.markdown("<h5 style='color:#2c3e50;'>Simula cómo la luz se dobla al pasar de un material a otro.</h5>", unsafe_allow_html=True)
             materiales = {
@@ -1019,45 +987,36 @@ def main():
                 "Diamante": 2.417,
                 "Germanio (IR)": 4.05
             }
-
             col1, col2 = st.columns([2, 3])
-
             with col1:
                 st.markdown("#### 🧪 Parámetros de Entrada")
-
                 # Inicializar estado de sesión si no existe
                 if 'n1_selected' not in st.session_state:
                     st.session_state.n1_selected = "Aire"
                     st.session_state.n1_manual = materiales["Aire"]
                     st.session_state.n1_is_manual = False
-
                 if 'n2_selected' not in st.session_state:
                     st.session_state.n2_selected = "Agua"
                     st.session_state.n2_manual = materiales["Agua"]
                     st.session_state.n2_is_manual = False
-
                 # Función para actualizar n1 desde material (siempre, incluso si fue editado)
                 def update_n1_from_material():
                     st.session_state.n1_manual = materiales[st.session_state.mat1]
                     st.session_state.n1_selected = st.session_state.mat1
                     st.session_state.n1_is_manual = False  # Resetear a automático
-
                 # Función para bloquear n1 cuando se edita manualmente
                 def lock_n1():
                     st.session_state.n1_is_manual = True
-
                 # Función para actualizar n2 desde material (siempre, incluso si fue editado)
                 def update_n2_from_material():
                     st.session_state.n2_manual = materiales[st.session_state.mat2]
                     st.session_state.n2_selected = st.session_state.mat2
                     st.session_state.n2_is_manual = False  # Resetear a automático
-
                 # Función para bloquear n2 cuando se edita manualmente
                 def lock_n2():
                     st.session_state.n2_is_manual = True
-
                 # --- Medio 1 ---
-                st.markdown("**Medio 1** (luz incidente)")
+                st.markdown("*Medio 1* (luz incidente)")
                 cols_m1 = st.columns(2)
                 with cols_m1[0]:
                     material1 = st.selectbox(
@@ -1075,17 +1034,14 @@ def main():
                         key="n1_manual",
                         on_change=lock_n1
                     )
-
                 # Mostrar estado
                 if st.session_state.n1_is_manual:
-                    st.caption("🔸 *Valor personalizado*")
+                    st.caption("🔸 Valor personalizado")
                 else:
-                    st.caption(f"🔹 *Usando valor de:* `{st.session_state.n1_selected}`")
-
+                    st.caption(f"🔹 Usando valor de: {st.session_state.n1_selected}")
                 st.divider()
-
                 # --- Medio 2 ---
-                st.markdown("**Medio 2** (luz refractada)")
+                st.markdown("*Medio 2* (luz refractada)")
                 cols_m2 = st.columns(2)
                 with cols_m2[0]:
                     material2 = st.selectbox(
@@ -1103,16 +1059,13 @@ def main():
                         key="n2_manual",
                         on_change=lock_n2
                     )
-
                 # Mostrar estado
                 if st.session_state.n2_is_manual:
-                    st.caption("🔸 *Valor personalizado*")
+                    st.caption("🔸 Valor personalizado")
                 else:
-                    st.caption(f"🔹 *Usando valor de:* `{st.session_state.n2_selected}`")
-
+                    st.caption(f"🔹 Usando valor de: {st.session_state.n2_selected}")
                 st.divider()
                 ang1 = st.slider("Ángulo de incidencia θ₁ (°)", min_value=0, max_value=90, value=30, key="snell_ang1", help="Ángulo entre el rayo incidente y la normal.")
-
                 valid = True
                 if n1_manual <= 0 or n2_manual <= 0:
                     st.error("❌ Los índices de refracción deben ser positivos.")
@@ -1120,7 +1073,6 @@ def main():
                 if ang1 < 0 or ang1 > 90:
                     st.error("❌ El ángulo debe estar entre 0° y 90°.")
                     valid = False
-
             with col2:
                 st.markdown("#### 🔍 Resultado y Diagrama")
                 if valid:
@@ -1139,10 +1091,8 @@ def main():
                     st.plotly_chart(graficar_snell_interactivo(n1_manual, ang1, n2_manual), use_container_width=True)
                 else:
                     st.info("Ajuste los parámetros para ver la simulación.")
-
             with st.expander("📖 Índices de refracción de materiales comunes"):
                 st.table(materiales)
-
         st.markdown('</div>', unsafe_allow_html=True)
 
 if __name__ == "__main__":
