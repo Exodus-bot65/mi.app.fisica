@@ -75,78 +75,128 @@ st.set_page_config(
     layout="wide"
 )
 
-# Estilos CSS mejorados
+# Estilos CSS mejorados — ¡INCLUYE FONDO Y INTERFAZ MÁS GRANDE!
 st.markdown("""
 <style>
+    /* Aplicar fondo de fórmulas */
+    body {
+        background-image: url('https://i.imgur.com/FORMULAS_BG.png'); /* ⚠️ REEMPLAZA ESTA URL */
+        background-repeat: repeat;
+        background-attachment: fixed;
+        background-size: auto;
+    }
+
+    /* Aumentar tamaño general para mejor visibilidad */
+    html, body, [data-testid="stAppViewContainer"] {
+        font-size: 1.12rem; /* 12% más grande que el normal */
+    }
+
     .main-header {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
         font-weight: 700;
         color: #2c3e50;
         text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: 2.2rem;
+        text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
     }
+
     .module-card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 15px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        margin: 1rem 0;
-        border-left: 4px solid #3498db;
+        background: rgba(255, 255, 255, 0.94);
+        padding: 1.8rem;
+        border-radius: 18px;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.12);
+        margin: 1.3rem 0;
+        border-left: 5px solid #3498db;
     }
+
     .result-box {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-        padding: 1rem;
-        border-radius: 10px;
-        margin: 1rem 0;
+        padding: 1.2rem;
+        border-radius: 12px;
+        margin: 1.2rem 0;
+        font-size: 1.15rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     }
+
     .info-box {
         background: #f8f9fa;
-        border-left: 4px solid #28a745;
-        padding: 1rem;
-        border-radius: 0 8px 8px 0;
-        margin: 1rem 0;
+        border-left: 5px solid #28a745;
+        padding: 1.2rem;
+        border-radius: 0 10px 10px 0;
+        margin: 1.2rem 0;
+        font-size: 1.05rem;
     }
     .explanation-box {
         background: #e3f2fd;
-        border-left: 4px solid #2196f3;
-        padding: 1rem;
-        border-radius: 0 8px 8px 0;
-        margin: 1rem 0;
+        border-left: 5px solid #2196f3;
+        padding: 1.2rem;
+        border-radius: 0 10px 10px 0;
+        margin: 1.2rem 0;
+        font-size: 1.05rem;
     }
     .warning-box {
         background: #fff3cd;
-        border-left: 4px solid #ffc107;
-        padding: 1rem;
-        border-radius: 0 8px 8px 0;
-        margin: 1rem 0;
+        border-left: 5px solid #ffc107;
+        padding: 1.2rem;
+        border-radius: 0 10px 10px 0;
+        margin: 1.2rem 0;
+        font-size: 1.05rem;
     }
     .error-box {
         background: #f8d7da;
         color: #721c24;
-        padding: 1rem;
-        border-radius: 10px;
-        margin: 1rem 0;
+        padding: 1.2rem;
+        border-radius: 12px;
+        margin: 1.2rem 0;
         border: 1px solid #f5c6cb;
+        font-size: 1.05rem;
     }
-    /* Cuadro azul en la sidebar */
+
     .sidebar-instructions {
         background: #e3f2fd;
-        padding: 1rem;
-        border-radius: 8px;
-        border-left: 4px solid #2196f3;
-        margin: 1rem 0;
-        font-size: 0.9rem;
+        padding: 1.2rem;
+        border-radius: 10px;
+        border-left: 5px solid #2196f3;
+        margin: 1.2rem 0;
+        font-size: 1.05rem;
     }
-    /* Cuadro azul para dato curioso */
+
     .curiosity-box {
         background: #e3f2fd;
-        padding: 1rem;
-        border-radius: 8px;
-        border-left: 4px solid #2196f3;
-        margin: 1rem 0;
-        font-size: 0.9rem;
+        padding: 1.2rem;
+        border-radius: 10px;
+        border-left: 5px solid #2196f3;
+        margin: 1.2rem 0;
+        font-size: 1.05rem;
     }
+
+    /* Aumentar tamaño de pestañas */
+    .stTabs [data-baseweb="tab-list"] button {
+        font-size: 1.15rem !important;
+        padding: 0.8rem 1.4rem !important;
+    }
+
+    /* Aumentar tamaño de botones e inputs */
+    button {
+        font-size: 1.1rem !important;
+        padding: 0.6rem 1.1rem !important;
+        border-radius: 8px !important;
+    }
+
+    input, select, .stNumberInput input, .stSelectbox select {
+        font-size: 1.05rem !important;
+        padding: 0.65rem !important;
+    }
+
+    /* Slider más grande */
+    .stSlider > div > div {
+        height: 1.4rem !important;
+    }
+    .stSlider label {
+        font-size: 1.05rem !important;
+    }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -176,9 +226,9 @@ def show_calculation_process(formula, steps, result, unit, description=""):
     formatted_result = format_scientific(result, unit)
     result_html = f"""
     <div class="result-box">
-        <h4 style="margin:0; font-size: 1.1rem;">Resultado Final</h4>
-        <p style="font-size: 1.3rem; margin: 0.5rem 0;">{formatted_result}</p>
-        {f'<p style="margin:0; opacity:0.9;">{description}</p>' if description else ''}
+        <h4 style="margin:0; font-size: 1.2rem;">Resultado Final</h4>
+        <p style="font-size: 1.4rem; margin: 0.6rem 0;">{formatted_result}</p>
+        {f'<p style="margin:0; opacity:0.95;">{description}</p>' if description else ''}
     </div>
     """
     st.markdown(result_html, unsafe_allow_html=True)
@@ -484,8 +534,8 @@ def graficar_dilatacion_lineal_interactiva(l0, alpha, dt_max):
         xaxis_title="ΔT (°C)",
         yaxis_title="Longitud L (m)",
         template="plotly_white",
-        font=dict(size=12),
-        title_font_size=18,
+        font=dict(size=14),
+        title_font_size=20,
         hovermode='x unified'
     )
     return fig
@@ -511,15 +561,15 @@ def graficar_campo_electrico_interactivo(q, r, r_max=10.0):
             y=[e_actual],
             mode='markers',
             name=f'E({r:.1f}m)',
-            marker=dict(color='red', size=10, symbol='star')
+            marker=dict(color='red', size=12, symbol='star')
         ))
     fig.update_layout(
         title="⚡ Campo Eléctrico vs Distancia",
         xaxis_title="Distancia r (m)",
         yaxis_title="Campo E (N/C)",
         template="plotly_white",
-        font=dict(size=12),
-        title_font_size=18,
+        font=dict(size=14),
+        title_font_size=20,
         yaxis_type="log"
     )
     return fig
@@ -545,15 +595,15 @@ def graficar_potencial_electrico_interactivo(q, r, r_max=10.0):
             y=[v_actual],
             mode='markers',
             name=f'V({r:.1f}m)',
-            marker=dict(color='red', size=10, symbol='star')
+            marker=dict(color='red', size=12, symbol='star')
         ))
     fig.update_layout(
         title="🔋 Potencial Eléctrico vs Distancia",
         xaxis_title="Distancia r (m)",
         yaxis_title="Potencial V (V)",
         template="plotly_white",
-        font=dict(size=12),
-        title_font_size=18
+        font=dict(size=14),
+        title_font_size=20
     )
     return fig
 
@@ -564,32 +614,31 @@ def graficar_snell_interactivo(n1, angulo1, n2):
     theta1_rad = math.radians(angulo1)
     x_inc = -2.5 * math.sin(theta1_rad)
     y_inc = 2.5 * math.cos(theta1_rad)
-    fig.add_trace(go.Scatter(x=[x_inc, 0], y=[y_inc, 0], mode='lines', line=dict(color="red", width=4), name="Incidente"))
+    fig.add_trace(go.Scatter(x=[x_inc, 0], y=[y_inc, 0], mode='lines', line=dict(color="red", width=5), name="Incidente"))
     sin_theta2 = n1 * math.sin(theta1_rad) / n2
     if abs(sin_theta2) <= 1:
         theta2_rad = math.asin(sin_theta2)
         x_ref = 2.5 * math.sin(theta2_rad)
         y_ref = -2.5 * math.cos(theta2_rad)
-        fig.add_trace(go.Scatter(x=[0, x_ref], y=[0, y_ref], mode='lines', line=dict(color="blue", width=4), name="Refractado"))
-        fig.add_annotation(x=x_ref/2, y=y_ref/2 - 0.2, text=f"θ₂ = {math.degrees(theta2_rad):.1f}°", showarrow=False, font=dict(color="blue", size=12))
+        fig.add_trace(go.Scatter(x=[0, x_ref], y=[0, y_ref], mode='lines', line=dict(color="blue", width=5), name="Refractado"))
+        fig.add_annotation(x=x_ref/2, y=y_ref/2 - 0.25, text=f"θ₂ = {math.degrees(theta2_rad):.1f}°", showarrow=False, font=dict(color="blue", size=14))
     else:
         x_ref = 2.5 * math.sin(theta1_rad)
         y_ref = 2.5 * math.cos(theta1_rad)
-        fig.add_trace(go.Scatter(x=[0, x_ref], y=[0, y_ref], mode='lines', line=dict(color="green", width=4, dash="dot"), name="Reflejado (Total)"))
-        fig.add_annotation(x=1.5, y=1.5, text="REFLEXIÓN TOTAL", showarrow=False, font=dict(color="green", size=14, weight="bold"))
-
-    fig.add_annotation(x=-3.5, y=2.5, text=f"Medio 1<br>n₁ = {n1}", showarrow=False, font=dict(size=14, color="red"))
-    fig.add_annotation(x=-3.5, y=-2.5, text=f"Medio 2<br>n₂ = {n2}", showarrow=False, font=dict(size=14, color="blue"))
-    fig.add_annotation(x=x_inc/2 - 0.3, y=y_inc/2, text=f"θ₁ = {angulo1}°", showarrow=False, font=dict(color="red", size=12))
+        fig.add_trace(go.Scatter(x=[0, x_ref], y=[0, y_ref], mode='lines', line=dict(color="green", width=5, dash="dot"), name="Reflejado (Total)"))
+        fig.add_annotation(x=1.5, y=1.5, text="REFLEXIÓN TOTAL", showarrow=False, font=dict(color="green", size=16, weight="bold"))
+    fig.add_annotation(x=-3.6, y=2.6, text=f"Medio 1<br>n₁ = {n1}", showarrow=False, font=dict(size=16, color="red"))
+    fig.add_annotation(x=-3.6, y=-2.6, text=f"Medio 2<br>n₂ = {n2}", showarrow=False, font=dict(size=16, color="blue"))
+    fig.add_annotation(x=x_inc/2 - 0.4, y=y_inc/2 + 0.1, text=f"θ₁ = {angulo1}°", showarrow=False, font=dict(color="red", size=14))
     fig.update_layout(
         title="🔍 Ley de Snell: Refracción y Reflexión",
         xaxis=dict(range=[-4, 4], showgrid=False, zeroline=False, showticklabels=False, scaleanchor="y", scaleratio=1),
         yaxis=dict(range=[-3, 3], showgrid=False, zeroline=False, showticklabels=False),
         template="plotly_white",
         showlegend=True,
-        width=600,
-        height=500,
-        margin=dict(l=20, r=20, t=50, b=20)
+        width=650,
+        height=550,
+        margin=dict(l=20, r=20, t=60, b=20)
     )
     return fig
 
@@ -611,8 +660,8 @@ def graficar_onda_senoidal_interactiva(f, lam, longitud_m=3.0):
         xaxis_title="Posición x (m)",
         yaxis_title="Amplitud",
         template="plotly_white",
-        font=dict(size=12),
-        title_font_size=18
+        font=dict(size=14),
+        title_font_size=20
     )
     return fig
 
@@ -634,15 +683,15 @@ def graficar_energia_foton():
         xaxis_title="Longitud de onda λ (nm)",
         yaxis_title="Energía E (J)",
         template="plotly_white",
-        font=dict(size=12),
-        title_font_size=18
+        font=dict(size=14),
+        title_font_size=20
     )
     return fig
 
 # =============== INTERFAZ PRINCIPAL ===============
 def main():
     st.markdown('<h1 class="main-header">🧠 Aprende Física de Forma Inteligente</h1>', unsafe_allow_html=True)
-
+    
     # =============== Datos persistentes ===============
     if 'curiosidad_persistente' not in st.session_state:
         st.session_state.curiosidad_persistente = get_random_curiosity()
@@ -652,11 +701,9 @@ def main():
         st.markdown("## 📚 Temas Disponibles")
         tema = st.selectbox("Selecciona un módulo",
                            ["🔥 Termodinámica", "⚡ Electricidad y Magnetismo", "🌊 Óptica y Ondas"])
-
         st.markdown("---")
         st.markdown("### ℹ Instrucciones")
         st.markdown('<div class="sidebar-instructions">Selecciona un tema y subtema. En gráficos interactivos, los resultados se actualizan al cambiar los valores. En otros, utiliza "Calcular".</div>', unsafe_allow_html=True)
-        
         st.markdown("---")
         st.markdown("### 🌟 Dato Curioso")
         text_only = st.session_state.curiosidad_persistente.split(" ", 1)[1] if " " in st.session_state.curiosidad_persistente else st.session_state.curiosidad_persistente
@@ -667,7 +714,6 @@ def main():
         st.markdown('<div class="module-card">', unsafe_allow_html=True)
         show_emoji_header("🔥", "Termodinámica")
         tab_conv, tab_sens, tab_lat, tab_ley1, tab_dil = st.tabs(["Conv. Temp", "Calor Sens", "Calor Lat", "1ra Ley", "Dilatación"])
-
         with tab_conv:
             col1, col2 = st.columns(2)
             with col1:
@@ -677,7 +723,6 @@ def main():
                 a = st.selectbox("A", ["Celsius", "Kelvin", "Fahrenheit"], key="conv_a")
             if st.button("🌡 Convertir", type="primary", key="conv_btn"):
                 convertir_temperatura(val, de, a)
-
         with tab_sens:
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -699,7 +744,6 @@ def main():
                         unit=unit,
                         description=desc
                     )
-
         with tab_lat:
             col1, col2 = st.columns(2)
             with col1:
@@ -719,7 +763,6 @@ def main():
                         unit=unit,
                         description=desc
                     )
-
         with tab_ley1:
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -747,7 +790,6 @@ def main():
                         unit=unit,
                         description=desc
                     )
-
         with tab_dil:
             col1, col2 = st.columns(2)
             with col1:
@@ -787,7 +829,6 @@ def main():
         st.markdown('<div class="module-card">', unsafe_allow_html=True)
         show_emoji_header("⚡", "Electricidad y Magnetismo")
         tab_coul, tab_camp, tab_pot, tab_cap, tab_ohm, tab_poten = st.tabs(["Coulomb", "Campo", "Potencial", "Capacitor", "Ohm", "Potencia"])
-
         with tab_coul:
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -809,7 +850,6 @@ def main():
                         unit=unit,
                         description=desc
                     )
-
         with tab_camp:
             col1, col2 = st.columns(2)
             with col1:
@@ -831,7 +871,6 @@ def main():
                         description=desc
                     )
                     st.plotly_chart(graficar_campo_electrico_interactivo(q, r, r_max), use_container_width=True)
-
         with tab_pot:
             col1, col2 = st.columns(2)
             with col1:
@@ -853,7 +892,6 @@ def main():
                         description=desc
                     )
                     st.plotly_chart(graficar_potencial_electrico_interactivo(q, r, r_max), use_container_width=True)
-
         with tab_cap:
             col1, col2 = st.columns(2)
             with col1:
@@ -873,7 +911,6 @@ def main():
                         unit=unit,
                         description=desc
                     )
-
         with tab_ohm:
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -899,7 +936,6 @@ def main():
                         unit=unit,
                         description=desc
                     )
-
         with tab_poten:
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -931,7 +967,6 @@ def main():
         st.markdown('<div class="module-card">', unsafe_allow_html=True)
         show_emoji_header("🌊", "Óptica y Ondas")
         tab_fp, tab_vo, tab_ef, tab_snell = st.tabs(["Frec/Per", "Vel Onda", "Energía Fotón", "Snell"])
-
         with tab_fp:
             col1, col2 = st.columns(2)
             with col1:
@@ -954,7 +989,6 @@ def main():
                         unit=unit,
                         description=desc
                     )
-
         with tab_vo:
             col1, col2 = st.columns(2)
             with col1:
@@ -978,7 +1012,6 @@ def main():
                         st.error("La frecuencia debe ser positiva.")
                     if lam <= 0:
                         st.error("La longitud de onda debe ser positiva.")
-
         with tab_ef:
             col1, col2 = st.columns(2)
             with col1:
@@ -1003,7 +1036,6 @@ def main():
                         description=desc
                     )
                     st.plotly_chart(graficar_energia_foton(), use_container_width=True)
-
         with tab_snell:
             st.markdown("<h5 style='color:#2c3e50;'>Simula cómo la luz se dobla al pasar de un material a otro.</h5>", unsafe_allow_html=True)
             materiales = {
@@ -1019,43 +1051,34 @@ def main():
                 "Diamante": 2.417,
                 "Germanio (IR)": 4.05
             }
-
             col1, col2 = st.columns([2, 3])
-
             with col1:
                 st.markdown("#### 🧪 Parámetros de Entrada")
-
                 # Inicializar estado de sesión si no existe
                 if 'n1_selected' not in st.session_state:
                     st.session_state.n1_selected = "Aire"
                     st.session_state.n1_manual = materiales["Aire"]
                     st.session_state.n1_is_manual = False
-
                 if 'n2_selected' not in st.session_state:
                     st.session_state.n2_selected = "Agua"
                     st.session_state.n2_manual = materiales["Agua"]
                     st.session_state.n2_is_manual = False
-
                 # Función para actualizar n1 desde material (siempre, incluso si fue editado)
                 def update_n1_from_material():
                     st.session_state.n1_manual = materiales[st.session_state.mat1]
                     st.session_state.n1_selected = st.session_state.mat1
                     st.session_state.n1_is_manual = False  # Resetear a automático
-
                 # Función para bloquear n1 cuando se edita manualmente
                 def lock_n1():
                     st.session_state.n1_is_manual = True
-
                 # Función para actualizar n2 desde material (siempre, incluso si fue editado)
                 def update_n2_from_material():
                     st.session_state.n2_manual = materiales[st.session_state.mat2]
                     st.session_state.n2_selected = st.session_state.mat2
                     st.session_state.n2_is_manual = False  # Resetear a automático
-
                 # Función para bloquear n2 cuando se edita manualmente
                 def lock_n2():
                     st.session_state.n2_is_manual = True
-
                 # --- Medio 1 ---
                 st.markdown("**Medio 1** (luz incidente)")
                 cols_m1 = st.columns(2)
@@ -1075,15 +1098,12 @@ def main():
                         key="n1_manual",
                         on_change=lock_n1
                     )
-
                 # Mostrar estado
                 if st.session_state.n1_is_manual:
                     st.caption("🔸 *Valor personalizado*")
                 else:
                     st.caption(f"🔹 *Usando valor de:* `{st.session_state.n1_selected}`")
-
                 st.divider()
-
                 # --- Medio 2 ---
                 st.markdown("**Medio 2** (luz refractada)")
                 cols_m2 = st.columns(2)
@@ -1103,16 +1123,13 @@ def main():
                         key="n2_manual",
                         on_change=lock_n2
                     )
-
                 # Mostrar estado
                 if st.session_state.n2_is_manual:
                     st.caption("🔸 *Valor personalizado*")
                 else:
                     st.caption(f"🔹 *Usando valor de:* `{st.session_state.n2_selected}`")
-
                 st.divider()
                 ang1 = st.slider("Ángulo de incidencia θ₁ (°)", min_value=0, max_value=90, value=30, key="snell_ang1", help="Ángulo entre el rayo incidente y la normal.")
-
                 valid = True
                 if n1_manual <= 0 or n2_manual <= 0:
                     st.error("❌ Los índices de refracción deben ser positivos.")
@@ -1120,7 +1137,6 @@ def main():
                 if ang1 < 0 or ang1 > 90:
                     st.error("❌ El ángulo debe estar entre 0° y 90°.")
                     valid = False
-
             with col2:
                 st.markdown("#### 🔍 Resultado y Diagrama")
                 if valid:
@@ -1139,10 +1155,8 @@ def main():
                     st.plotly_chart(graficar_snell_interactivo(n1_manual, ang1, n2_manual), use_container_width=True)
                 else:
                     st.info("Ajuste los parámetros para ver la simulación.")
-
             with st.expander("📖 Índices de refracción de materiales comunes"):
                 st.table(materiales)
-
         st.markdown('</div>', unsafe_allow_html=True)
 
 if __name__ == "__main__":
