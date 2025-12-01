@@ -75,128 +75,78 @@ st.set_page_config(
     layout="wide"
 )
 
-# Estilos CSS mejorados — ¡INCLUYE FONDO Y INTERFAZ MÁS GRANDE!
+# Estilos CSS mejorados
 st.markdown("""
 <style>
-    /* Aplicar fondo de fórmulas */
-    body {
-        background-image: url('https://i.imgur.com/FORMULAS_BG.png'); /* ⚠️ REEMPLAZA ESTA URL */
-        background-repeat: repeat;
-        background-attachment: fixed;
-        background-size: auto;
-    }
-
-    /* Aumentar tamaño general para mejor visibilidad */
-    html, body, [data-testid="stAppViewContainer"] {
-        font-size: 1.12rem; /* 12% más grande que el normal */
-    }
-
     .main-header {
-        font-size: 2.8rem;
+        font-size: 2.5rem;
         font-weight: 700;
         color: #2c3e50;
         text-align: center;
-        margin-bottom: 2.2rem;
-        text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
+        margin-bottom: 2rem;
     }
-
     .module-card {
-        background: rgba(255, 255, 255, 0.94);
-        padding: 1.8rem;
-        border-radius: 18px;
-        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.12);
-        margin: 1.3rem 0;
-        border-left: 5px solid #3498db;
+        background: white;
+        padding: 1.5rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin: 1rem 0;
+        border-left: 4px solid #3498db;
     }
-
     .result-box {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-        padding: 1.2rem;
-        border-radius: 12px;
-        margin: 1.2rem 0;
-        font-size: 1.15rem;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        padding: 1rem;
+        border-radius: 10px;
+        margin: 1rem 0;
     }
-
     .info-box {
         background: #f8f9fa;
-        border-left: 5px solid #28a745;
-        padding: 1.2rem;
-        border-radius: 0 10px 10px 0;
-        margin: 1.2rem 0;
-        font-size: 1.05rem;
+        border-left: 4px solid #28a745;
+        padding: 1rem;
+        border-radius: 0 8px 8px 0;
+        margin: 1rem 0;
     }
     .explanation-box {
         background: #e3f2fd;
-        border-left: 5px solid #2196f3;
-        padding: 1.2rem;
-        border-radius: 0 10px 10px 0;
-        margin: 1.2rem 0;
-        font-size: 1.05rem;
+        border-left: 4px solid #2196f3;
+        padding: 1rem;
+        border-radius: 0 8px 8px 0;
+        margin: 1rem 0;
     }
     .warning-box {
         background: #fff3cd;
-        border-left: 5px solid #ffc107;
-        padding: 1.2rem;
-        border-radius: 0 10px 10px 0;
-        margin: 1.2rem 0;
-        font-size: 1.05rem;
+        border-left: 4px solid #ffc107;
+        padding: 1rem;
+        border-radius: 0 8px 8px 0;
+        margin: 1rem 0;
     }
     .error-box {
         background: #f8d7da;
         color: #721c24;
-        padding: 1.2rem;
-        border-radius: 12px;
-        margin: 1.2rem 0;
+        padding: 1rem;
+        border-radius: 10px;
+        margin: 1rem 0;
         border: 1px solid #f5c6cb;
-        font-size: 1.05rem;
     }
-
+    /* Cuadro azul en la sidebar */
     .sidebar-instructions {
         background: #e3f2fd;
-        padding: 1.2rem;
-        border-radius: 10px;
-        border-left: 5px solid #2196f3;
-        margin: 1.2rem 0;
-        font-size: 1.05rem;
+        padding: 1rem;
+        border-radius: 8px;
+        border-left: 4px solid #2196f3;
+        margin: 1rem 0;
+        font-size: 0.9rem;
     }
-
+    /* Cuadro azul para dato curioso */
     .curiosity-box {
         background: #e3f2fd;
-        padding: 1.2rem;
-        border-radius: 10px;
-        border-left: 5px solid #2196f3;
-        margin: 1.2rem 0;
-        font-size: 1.05rem;
+        padding: 1rem;
+        border-radius: 8px;
+        border-left: 4px solid #2196f3;
+        margin: 1rem 0;
+        font-size: 0.9rem;
     }
-
-    /* Aumentar tamaño de pestañas */
-    .stTabs [data-baseweb="tab-list"] button {
-        font-size: 1.15rem !important;
-        padding: 0.8rem 1.4rem !important;
-    }
-
-    /* Aumentar tamaño de botones e inputs */
-    button {
-        font-size: 1.1rem !important;
-        padding: 0.6rem 1.1rem !important;
-        border-radius: 8px !important;
-    }
-
-    input, select, .stNumberInput input, .stSelectbox select {
-        font-size: 1.05rem !important;
-        padding: 0.65rem !important;
-    }
-
-    /* Slider más grande */
-    .stSlider > div > div {
-        height: 1.4rem !important;
-    }
-    .stSlider label {
-        font-size: 1.05rem !important;
-    }
-
 </style>
 """, unsafe_allow_html=True)
 
@@ -226,9 +176,9 @@ def show_calculation_process(formula, steps, result, unit, description=""):
     formatted_result = format_scientific(result, unit)
     result_html = f"""
     <div class="result-box">
-        <h4 style="margin:0; font-size: 1.2rem;">Resultado Final</h4>
-        <p style="font-size: 1.4rem; margin: 0.6rem 0;">{formatted_result}</p>
-        {f'<p style="margin:0; opacity:0.95;">{description}</p>' if description else ''}
+        <h4 style="margin:0; font-size: 1.1rem;">Resultado Final</h4>
+        <p style="font-size: 1.3rem; margin: 0.5rem 0;">{formatted_result}</p>
+        {f'<p style="margin:0; opacity:0.9;">{description}</p>' if description else ''}
     </div>
     """
     st.markdown(result_html, unsafe_allow_html=True)
@@ -238,6 +188,16 @@ def show_error_message(message):
 
 def show_warning_message(message):
     st.markdown(f'<div class="warning-box">{message}</div>', unsafe_allow_html=True)
+
+# =============== NUEVA FUNCIÓN DE UTILIDAD ===============
+def parse_alpha_input(base, exp, use_alpha):
+    """Convierte base y exponente en valor de α si está activado."""
+    if not use_alpha:
+        return None
+    try:
+        return float(base) * (10 ** int(exp))
+    except (ValueError, OverflowError):
+        return None
 
 # =============== FUNCIONES DE CÁLCULO ACTUALIZADAS ===============
 def convertir_temperatura(valor, de, a):
@@ -534,8 +494,8 @@ def graficar_dilatacion_lineal_interactiva(l0, alpha, dt_max):
         xaxis_title="ΔT (°C)",
         yaxis_title="Longitud L (m)",
         template="plotly_white",
-        font=dict(size=14),
-        title_font_size=20,
+        font=dict(size=12),
+        title_font_size=18,
         hovermode='x unified'
     )
     return fig
@@ -561,15 +521,15 @@ def graficar_campo_electrico_interactivo(q, r, r_max=10.0):
             y=[e_actual],
             mode='markers',
             name=f'E({r:.1f}m)',
-            marker=dict(color='red', size=12, symbol='star')
+            marker=dict(color='red', size=10, symbol='star')
         ))
     fig.update_layout(
         title="⚡ Campo Eléctrico vs Distancia",
         xaxis_title="Distancia r (m)",
         yaxis_title="Campo E (N/C)",
         template="plotly_white",
-        font=dict(size=14),
-        title_font_size=20,
+        font=dict(size=12),
+        title_font_size=18,
         yaxis_type="log"
     )
     return fig
@@ -595,15 +555,15 @@ def graficar_potencial_electrico_interactivo(q, r, r_max=10.0):
             y=[v_actual],
             mode='markers',
             name=f'V({r:.1f}m)',
-            marker=dict(color='red', size=12, symbol='star')
+            marker=dict(color='red', size=10, symbol='star')
         ))
     fig.update_layout(
         title="🔋 Potencial Eléctrico vs Distancia",
         xaxis_title="Distancia r (m)",
         yaxis_title="Potencial V (V)",
         template="plotly_white",
-        font=dict(size=14),
-        title_font_size=20
+        font=dict(size=12),
+        title_font_size=18
     )
     return fig
 
@@ -614,31 +574,31 @@ def graficar_snell_interactivo(n1, angulo1, n2):
     theta1_rad = math.radians(angulo1)
     x_inc = -2.5 * math.sin(theta1_rad)
     y_inc = 2.5 * math.cos(theta1_rad)
-    fig.add_trace(go.Scatter(x=[x_inc, 0], y=[y_inc, 0], mode='lines', line=dict(color="red", width=5), name="Incidente"))
+    fig.add_trace(go.Scatter(x=[x_inc, 0], y=[y_inc, 0], mode='lines', line=dict(color="red", width=4), name="Incidente"))
     sin_theta2 = n1 * math.sin(theta1_rad) / n2
     if abs(sin_theta2) <= 1:
         theta2_rad = math.asin(sin_theta2)
         x_ref = 2.5 * math.sin(theta2_rad)
         y_ref = -2.5 * math.cos(theta2_rad)
-        fig.add_trace(go.Scatter(x=[0, x_ref], y=[0, y_ref], mode='lines', line=dict(color="blue", width=5), name="Refractado"))
-        fig.add_annotation(x=x_ref/2, y=y_ref/2 - 0.25, text=f"θ₂ = {math.degrees(theta2_rad):.1f}°", showarrow=False, font=dict(color="blue", size=14))
+        fig.add_trace(go.Scatter(x=[0, x_ref], y=[0, y_ref], mode='lines', line=dict(color="blue", width=4), name="Refractado"))
+        fig.add_annotation(x=x_ref/2, y=y_ref/2 - 0.2, text=f"θ₂ = {math.degrees(theta2_rad):.1f}°", showarrow=False, font=dict(color="blue", size=12))
     else:
         x_ref = 2.5 * math.sin(theta1_rad)
         y_ref = 2.5 * math.cos(theta1_rad)
-        fig.add_trace(go.Scatter(x=[0, x_ref], y=[0, y_ref], mode='lines', line=dict(color="green", width=5, dash="dot"), name="Reflejado (Total)"))
-        fig.add_annotation(x=1.5, y=1.5, text="REFLEXIÓN TOTAL", showarrow=False, font=dict(color="green", size=16, weight="bold"))
-    fig.add_annotation(x=-3.6, y=2.6, text=f"Medio 1<br>n₁ = {n1}", showarrow=False, font=dict(size=16, color="red"))
-    fig.add_annotation(x=-3.6, y=-2.6, text=f"Medio 2<br>n₂ = {n2}", showarrow=False, font=dict(size=16, color="blue"))
-    fig.add_annotation(x=x_inc/2 - 0.4, y=y_inc/2 + 0.1, text=f"θ₁ = {angulo1}°", showarrow=False, font=dict(color="red", size=14))
+        fig.add_trace(go.Scatter(x=[0, x_ref], y=[0, y_ref], mode='lines', line=dict(color="green", width=4, dash="dot"), name="Reflejado (Total)"))
+        fig.add_annotation(x=1.5, y=1.5, text="REFLEXIÓN TOTAL", showarrow=False, font=dict(color="green", size=14, weight="bold"))
+    fig.add_annotation(x=-3.5, y=2.5, text=f"Medio 1<br>n₁ = {n1}", showarrow=False, font=dict(size=14, color="red"))
+    fig.add_annotation(x=-3.5, y=-2.5, text=f"Medio 2<br>n₂ = {n2}", showarrow=False, font=dict(size=14, color="blue"))
+    fig.add_annotation(x=x_inc/2 - 0.3, y=y_inc/2, text=f"θ₁ = {angulo1}°", showarrow=False, font=dict(color="red", size=12))
     fig.update_layout(
         title="🔍 Ley de Snell: Refracción y Reflexión",
         xaxis=dict(range=[-4, 4], showgrid=False, zeroline=False, showticklabels=False, scaleanchor="y", scaleratio=1),
         yaxis=dict(range=[-3, 3], showgrid=False, zeroline=False, showticklabels=False),
         template="plotly_white",
         showlegend=True,
-        width=650,
-        height=550,
-        margin=dict(l=20, r=20, t=60, b=20)
+        width=600,
+        height=500,
+        margin=dict(l=20, r=20, t=50, b=20)
     )
     return fig
 
@@ -660,8 +620,8 @@ def graficar_onda_senoidal_interactiva(f, lam, longitud_m=3.0):
         xaxis_title="Posición x (m)",
         yaxis_title="Amplitud",
         template="plotly_white",
-        font=dict(size=14),
-        title_font_size=20
+        font=dict(size=12),
+        title_font_size=18
     )
     return fig
 
@@ -683,19 +643,17 @@ def graficar_energia_foton():
         xaxis_title="Longitud de onda λ (nm)",
         yaxis_title="Energía E (J)",
         template="plotly_white",
-        font=dict(size=14),
-        title_font_size=20
+        font=dict(size=12),
+        title_font_size=18
     )
     return fig
 
 # =============== INTERFAZ PRINCIPAL ===============
 def main():
     st.markdown('<h1 class="main-header">🧠 Aprende Física de Forma Inteligente</h1>', unsafe_allow_html=True)
-    
     # =============== Datos persistentes ===============
     if 'curiosidad_persistente' not in st.session_state:
         st.session_state.curiosidad_persistente = get_random_curiosity()
-
     # =============== BARRA LATERAL ===============
     with st.sidebar:
         st.markdown("## 📚 Temas Disponibles")
@@ -708,7 +666,6 @@ def main():
         st.markdown("### 🌟 Dato Curioso")
         text_only = st.session_state.curiosidad_persistente.split(" ", 1)[1] if " " in st.session_state.curiosidad_persistente else st.session_state.curiosidad_persistente
         st.markdown(f'<div class="curiosity-box"><strong>⚡ Hoy aprende esto:</strong><br>{text_only}</div>', unsafe_allow_html=True)
-
     # Contenido principal
     if tema == "🔥 Termodinámica":
         st.markdown('<div class="module-card">', unsafe_allow_html=True)
@@ -793,38 +750,146 @@ def main():
         with tab_dil:
             col1, col2 = st.columns(2)
             with col1:
-                l0 = st.number_input("Longitud inicial L₀ (m)", value=1.0, format="%.6f", key="dil_l0")
-                alpha = st.number_input("Coeficiente α (1/°C)", value=1.2e-5, format="%.2e", key="dil_alpha")
-            with col2:
-                dt_max = st.number_input("ΔT máximo (°C)", value=100.0, key="dil_dtmax")
-            valid = True
-            if l0 <= 0:
-                st.error("La longitud inicial debe ser positiva.")
-                valid = False
-            if alpha < 0:
-                st.error("El coeficiente de dilatación no puede ser negativo.")
-                valid = False
-            if dt_max < 0:
-                st.error("ΔT máximo no puede ser negativo.")
-                valid = False
-            if valid:
-                dt_ejemplo = dt_max / 2
-                l_final = l0 * (1 + alpha * dt_ejemplo)
-                show_calculation_process(
-                    formula=r"L = L_0(1 + \alpha \Delta T)",
-                    steps=[
-                        f"L = {l0} * (1 + {alpha} * {dt_ejemplo})",
-                        f"L = {l0} * (1 + {alpha * dt_ejemplo})",
-                        f"L = {l0} * {1 + alpha * dt_ejemplo}",
-                        f"L = {l_final:.6f}"
-                    ],
-                    result=l_final,
-                    unit="m",
-                    description="Longitud final después de la dilatación."
+                objetivo = st.radio(
+                    "¿Qué deseas calcular?",
+                    options=["L (Longitud final)", "ΔL (Dilatación)", "L₀ (Longitud inicial)"],
+                    index=0,
+                    key="dil_objetivo"
                 )
-                st.plotly_chart(graficar_dilatacion_lineal_interactiva(l0, alpha, dt_max), use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+                st.divider()
+                # Entrada para L₀
+                if "L₀" not in objetivo:
+                    l0 = st.number_input("Longitud inicial L₀ (m)", value=1.0, format="%.6f", key="dil_l0")
+                else:
+                    l0 = None
 
+                # Entrada para α
+                use_alpha = st.checkbox("Especificar coeficiente α", value=True, key="dil_use_alpha")
+                if use_alpha:
+                    col_a1, col_a2 = st.columns(2)
+                    with col_a1:
+                        alpha_base = st.number_input("Base", value=12.0, key="dil_alpha_base")
+                    with col_a2:
+                        alpha_exp = st.number_input("×10^", value=-6, step=1, format="%d", key="dil_alpha_exp")
+                    alpha = parse_alpha_input(alpha_base, alpha_exp, use_alpha)
+                else:
+                    alpha = None
+
+                # Entrada para ΔT
+                dt = st.number_input("ΔT (°C)", value=100.0, key="dil_dt")
+
+            with col2:
+                # Entrada para L o ΔL si son objetivos
+                if "L (Longitud final)" == objetivo:
+                    l_final_input = None
+                elif "ΔL (Dilatación)" == objetivo:
+                    l_final_input = None
+                else:  # L₀ es objetivo → pedir L
+                    l_final_input = st.number_input("Longitud final L (m)", value=1.0012, format="%.6f", key="dil_l_final")
+
+                # ΔT máximo para gráfico
+                dt_max = st.number_input("ΔT máximo para gráfico (°C)", value=100.0, key="dil_dtmax")
+
+            # Validaciones
+            valid = True
+            errors = []
+
+            if objetivo != "L₀ (Longitud inicial)" and (l0 is None or l0 <= 0):
+                errors.append("La longitud inicial L₀ debe ser positiva.")
+                valid = False
+
+            if use_alpha:
+                if alpha is None or alpha < 0:
+                    errors.append("El coeficiente α debe ser un número no negativo.")
+                    valid = False
+            else:
+                if objetivo in ["L (Longitud final)", "ΔL (Dilatación)"]:
+                    errors.append("Se requiere α para calcular L o ΔL.")
+                    valid = False
+
+            if dt < 0:
+                errors.append("ΔT no puede ser negativo.")
+                valid = False
+
+            if objetivo == "L₀ (Longitud inicial)":
+                if l_final_input is None or l_final_input <= 0:
+                    errors.append("La longitud final L debe ser positiva.")
+                    valid = False
+                if use_alpha and (1 + alpha * dt) == 0:
+                    errors.append("1 + α·ΔT no puede ser cero (división por cero).")
+                    valid = False
+
+            for err in errors:
+                st.error(err)
+
+            # Cálculo y visualización
+            if valid:
+                try:
+                    if objetivo == "L (Longitud final)":
+                        l_final = l0 * (1 + alpha * dt)
+                        delta_l = l0 * alpha * dt
+                        steps = [
+                            f"L = L₀(1 + α·ΔT)",
+                            f"L = {l0} * (1 + {alpha:.2e} * {dt})",
+                            f"L = {l0} * (1 + {alpha * dt:.6f})",
+                            f"L = {l_final:.6f}"
+                        ]
+                        result_val = l_final
+                        unit = "m"
+                        desc = "Longitud final tras la dilatación térmica."
+
+                    elif objetivo == "ΔL (Dilatación)":
+                        delta_l = l0 * alpha * dt
+                        l_final = l0 + delta_l
+                        steps = [
+                            f"ΔL = L₀·α·ΔT",
+                            f"ΔL = {l0} * {alpha:.2e} * {dt}",
+                            f"ΔL = {delta_l:.6f}"
+                        ]
+                        result_val = delta_l
+                        unit = "m"
+                        desc = "Cambio de longitud debido a la dilatación."
+
+                    elif objetivo == "L₀ (Longitud inicial)":
+                        l0 = l_final_input / (1 + alpha * dt)
+                        delta_l = l_final_input - l0
+                        steps = [
+                            f"L₀ = L / (1 + α·ΔT)",
+                            f"L₀ = {l_final_input} / (1 + {alpha:.2e} * {dt})",
+                            f"L₀ = {l_final_input} / {1 + alpha * dt:.6f}",
+                            f"L₀ = {l0:.6f}"
+                        ]
+                        result_val = l0
+                        unit = "m"
+                        desc = "Longitud inicial antes de la dilatación."
+
+                    # Mostrar resultado
+                    show_calculation_process(
+                        formula=r"L = L_0(1 + \alpha \Delta T)" if objetivo != "L₀ (Longitud inicial)" else r"L_0 = \frac{L}{1 + \alpha \Delta T}",
+                        steps=steps,
+                        result=result_val,
+                        unit=unit,
+                        description=desc
+                    )
+
+                    # Gráfico (siempre con L₀ y α reales)
+                    if objetivo == "L₀ (Longitud inicial)":
+                        plot_l0 = l0
+                    else:
+                        plot_l0 = l0
+
+                    if use_alpha:
+                        st.plotly_chart(
+                            graficar_dilatacion_lineal_interactiva(plot_l0, alpha, dt_max),
+                            use_container_width=True
+                        )
+                    else:
+                        st.info("Gráfico no disponible sin α.")
+
+                except Exception as e:
+                    show_error_message(f"Error en el cálculo: {str(e)}")
+
+        st.markdown('</div>', unsafe_allow_html=True)
     elif tema == "⚡ Electricidad y Magnetismo":
         st.markdown('<div class="module-card">', unsafe_allow_html=True)
         show_emoji_header("⚡", "Electricidad y Magnetismo")
@@ -962,7 +1027,6 @@ def main():
                         description=desc
                     )
         st.markdown('</div>', unsafe_allow_html=True)
-
     elif tema == "🌊 Óptica y Ondas":
         st.markdown('<div class="module-card">', unsafe_allow_html=True)
         show_emoji_header("🌊", "Óptica y Ondas")
