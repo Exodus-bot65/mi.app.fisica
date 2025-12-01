@@ -152,13 +152,26 @@ st.markdown("""
 
 # =============== FUNCIONES UTILITARIAS ===============
 def format_scientific(value, unit):
-    """Formatea números en notación científica con unidades."""
+    """Formatea números en notación decimal o científica según sea más legible, evitando 'e' innecesario."""
     if value is None or math.isnan(value) or math.isinf(value):
         return "Indefinido"
-    if abs(value) >= 1e5 or (abs(value) < 1e-2 and abs(value) > 0):
-        return f"{value:.2e} {unit}"
+    # Si el valor es muy pequeño pero no extremadamente, mostramos decimal
+    if abs(value) < 1e-2 and abs(value) > 0:
+        # Formato decimal con suficientes decimales para mostrar el valor
+        # Buscamos el primer dígito significativo
+        if abs(value) >= 1e-6:
+            # Para valores como 0.000001, usamos 6 decimales
+            return f"{value:.6f} {unit}"
+        else:
+            # Para valores muy pequeños, forzamos notación científica con formato limpio
+            return f"{value:.2e} {unit}"
     else:
-        return f"{value:.4g} {unit}"
+        # Para valores grandes o medianos, usar notación científica solo si es necesario
+        if abs(value) >= 1e5:
+            return f"{value:.2e} {unit}"
+        else:
+            # Mostrar como número decimal normal
+            return f"{value:.6f} {unit}"  # Ajusta .6f a .7f o más si necesitas más precisión
 
 def show_emoji_header(emoji, text):
     """Muestra un encabezado con emoji"""
@@ -828,9 +841,11 @@ def main():
                     if objetivo == "L (Longitud final)":
                         l_final = l0 * (1 + alpha * dt)
                         delta_l = l0 * alpha * dt
+                        # Formatear paso intermedio para evitar 'e'
+                        alpha_str = f"{alpha:.6f}" if abs(alpha) >= 1e-6 else f"{alpha:.2e}"
                         steps = [
                             f"L = L₀(1 + α·ΔT)",
-                            f"L = {l0} * (1 + {alpha:.2e} * {dt})",
+                            f"L = {l0} * (1 + {alpha_str} * {dt})",
                             f"L = {l0} * (1 + {alpha * dt:.6f})",
                             f"L = {l_final:.6f}"
                         ]
@@ -841,9 +856,11 @@ def main():
                     elif objetivo == "ΔL (Dilatación)":
                         delta_l = l0 * alpha * dt
                         l_final = l0 + delta_l
+                        # Formatear paso intermedio para evitar 'e'
+                        alpha_str = f"{alpha:.6f}" if abs(alpha) >= 1e-6 else f"{alpha:.2e}"
                         steps = [
                             f"ΔL = L₀·α·ΔT",
-                            f"ΔL = {l0} * {alpha:.2e} * {dt}",
+                            f"ΔL = {l0} * {alpha_str} * {dt}",
                             f"ΔL = {delta_l:.6f}"
                         ]
                         result_val = delta_l
@@ -853,9 +870,11 @@ def main():
                     elif objetivo == "L₀ (Longitud inicial)":
                         l0 = l_final_input / (1 + alpha * dt)
                         delta_l = l_final_input - l0
+                        # Formatear paso intermedio para evitar 'e'
+                        alpha_str = f"{alpha:.6f}" if abs(alpha) >= 1e-6 else f"{alpha:.2e}"
                         steps = [
                             f"L₀ = L / (1 + α·ΔT)",
-                            f"L₀ = {l_final_input} / (1 + {alpha:.2e} * {dt})",
+                            f"L₀ = {l_final_input} / (1 + {alpha_str} * {dt})",
                             f"L₀ = {l_final_input} / {1 + alpha * dt:.6f}",
                             f"L₀ = {l0:.6f}"
                         ]
@@ -879,10 +898,45 @@ def main():
                         plot_l0 = l0
 
                     if use_alpha:
-                        st.plotly_chart(
-                            graficar_dilatacion_lineal_interactiva(plot_l0, alpha, dt_max),
-                            use_container_width=True
+                        # Generar datos para el gráfico
+                        dt_vals = np.linspace(0, dt_max, 100)
+                        l_vals = plot_l0 * (1 + alpha * dt_vals)
+
+                        # Crear figura
+                        fig = go.Figure()
+                        fig.add_trace(go.Scatter(
+                            x=dt_vals,
+                            y=l_vals,
+                            mode='lines',
+                            name='Longitud',
+                            line=dict(color='#e74c3c', width=3)
+                        ))
+
+                        # Agregar punto específico en dt (el valor ingresado, no dt_max)
+                        if dt <= dt_max:
+                            l_at_dt = plot_l0 * (1 + alpha * dt)
+                            fig.add_trace(go.Scatter(
+                                x=[dt],
+                                y=[l_at_dt],
+                                mode='markers',
+                                name=f'L({dt:.1f}°C)',
+                                marker=dict(color='red', size=10, symbol='star')
+                            ))
+                            # Personalizar hover para mostrar el valor exacto
+                            fig.update_traces(
+                                hovertemplate='<b>ΔT</b>: %{x:.1f}°C<br><b>L</b>: %{y:.6f} m<extra></extra>'
+                            )
+
+                        fig.update_layout(
+                            title="🌡 Dilatación Térmica Lineal",
+                            xaxis_title="ΔT (°C)",
+                            yaxis_title="Longitud L (m)",
+                            template="plotly_white",
+                            font=dict(size=12),
+                            title_font_size=18,
+                            hovermode='x unified'
                         )
+                        st.plotly_chart(fig, use_container_width=True)
                     else:
                         st.info("Gráfico no disponible sin α.")
 
